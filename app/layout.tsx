@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -14,9 +15,30 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`antialiased bg-white text-black`}>
+        <div className="min-h-screen flex flex-col">
+          {/* Header */}
+          <header className="bg-gray-100 p-4 shadow">
+            <nav className="max-w-4xl mx-auto flex gap-4 justify-center">
+              <Link href="/">Główna</Link>
+              <Link href="/about">O mnie</Link>
+              <Link href="/contact">Kontakt</Link>
+            </nav>
+          </header>
+
+          {/* Main content */}
+          <main className="flex-grow max-w-4xl mx-auto p-4">
+            {children}
+          </main>
+
+          {/* Footer */}
+          <footer className="bg-gray-100 text-center text-sm text-gray-600 py-4">
+            ©2025 Strona Portfolio. Wszelkie prawa zastrzeżone.
+          </footer>
+        </div>
+      </body> 
     </html>
   );
 }
