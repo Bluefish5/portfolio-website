@@ -15,9 +15,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-   return (
+  return (
     <html lang="en">
-      <body className={`antialiased bg-white text-black`}>
+      <body className={`antialiased text-black paper-background paper-texture`}>
         <div className="min-h-screen flex flex-col">
           {/* Header */}
           <header className="bg-gray-100 p-4 shadow">
@@ -38,7 +38,7 @@ export default function RootLayout({
             ©2025 Strona Portfolio. Wszelkie prawa zastrzeżone.
           </footer>
         </div>
-      </body> 
+      </body>
     </html>
   );
 }
