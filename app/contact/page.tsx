@@ -21,7 +21,7 @@ export default function Home() {
 
   return (
     <main >
-      <section className="p-6 bg-white rounded-lg shadow-md mt-10 opacity-60" >
+      <section className="p-6 bg-white rounded-lg shadow-md mt-10 opacity-60 hidden" >
         <h1 className="text-3xl font-bold mb-6 text-center ">Formularz kontaktowy (TODO.)</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import fs from "fs/promises";
 import path from "path";
-import data from '@/app/data/projects.json';
+import fs from "fs/promises";
+import data from "@/app/data/projects.json";
+import Gallery from "@/app/components/Gallery";
 
 type CardType = {
   id: number;
@@ -14,22 +15,19 @@ type CardType = {
   galleryFolder: string;
 };
 
-
 type PageProps = {
-  params: Promise<{ id: string }>
-}
+  params: { id: string };
+};
 
 export async function generateStaticParams() {
   const cards: CardType[] = data;
-  return data.map(project => ({
+  return cards.map(project => ({
     id: project.id.toString(),
   }));
 }
 
 export default async function ProjectPage({ params }: PageProps) {
-  const { id } = await params;
-  const cards: CardType[] = data;
-
+  const { id } = params;
   const project = data.find(p => p.id.toString() === id);
   if (!project) return notFound();
 
@@ -49,30 +47,25 @@ export default async function ProjectPage({ params }: PageProps) {
 
       <h1 className="text-3xl font-bold mb-6 text-black">{project.title}</h1>
 
-      <div className="mb-12 clearfix">
-        <div className="relative w-[300px] h-[300px] float-left mr-6 mb-4 rounded overflow-hidden">
-          <Image src={project.image} alt={project.title} fill className="object-cover" />
-        </div>
-        <div className="text-black text-justify">
-          <p className="whitespace-pre-line">{project.details}</p>
+      <div className="mb-12 overflow-hidden">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-[300px] md:mr-6 mb-4 rounded overflow-hidden flex-shrink-0">
+            <Image
+              src={project.image}
+              alt={project.title}
+              width={300}
+              height={300}
+              className="object-cover rounded w-full h-auto"
+            />
+          </div>
+          <div className="text-black text-justify">
+            <p className="whitespace-pre-line">{project.details}</p>
+          </div>
         </div>
       </div>
 
-      <div>
-        <h2 className="text-2xl font-semibold mb-4">Gallery</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {images.map((img, idx) => (
-            <div key={idx} className="relative w-full h-48 rounded overflow-hidden">
-              <Image
-                src={`/images/${project.galleryFolder}/${img}`}
-                alt={`Gallery image ${idx + 1}`}
-                fill
-                className="object-cover"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+      <h2 className="text-2xl font-semibold mb-4">Gallery</h2>
+      <Gallery images={images} folder={project.galleryFolder} />
     </main>
   );
 }
